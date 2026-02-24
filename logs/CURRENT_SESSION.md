@@ -1,10 +1,10 @@
 # Session State: Linux AI Hub
 
-**Last Updated**: 2026-02-23 19:34
+**Last Updated**: 2026-02-23 19:35
 
 ## Session Objective
 
-Documentar el plan final usado para dejar OpenClaw estable y seguro en VPS, y preparar versionado en git.
+Cerrar la sesion con memoria persistida para retomar en cualquier momento con el skill `continue`.
 
 ## Current State
 
@@ -26,3 +26,4 @@ Documentar el plan final usado para dejar OpenClaw estable y seguro en VPS, y pr
 1. Mantener `logseq.md` como pagina maestra y agregar nuevas notas por bloques `[[Page Links]]`.
 2. Hacer commits pequenos por tema (ej: seguridad, tailscale, runbooks).
 3. Ejecutar `openclaw security audit --deep` cuando haya cambios de configuracion.
+4. En una sesion nueva, ejecutar el skill `continue` para restaurar contexto desde `logs/CURRENT_SESSION.md` y `logs/history/`.

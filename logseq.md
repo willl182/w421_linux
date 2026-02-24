@@ -78,6 +78,15 @@
   - **Aprendizaje**: usar `sudo` para operaciones Docker o agregar grupo `docker`.
 - **Error**: interpretar "offline" del portal como servicio caido.
   - **Aprendizaje**: validar siempre con checks locales reales (`curl`, `docker ps`, audit).
+- **Error**: asumir que `docker compose restart` siempre aplica cambios de `.env`.
+  - **Aprendizaje**: cuando hay dudas de variables, recrear con `docker compose ... up -d --force-recreate`.
+- **Error**: diagnosticar Telegram sin validar API directa.
+  - **Aprendizaje**: confirmar token con `curl https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/getMe` (`ok: true`).
+
+## [[Seguridad - Respuesta a secretos expuestos]]
+
+- Runbook dedicado: `[[OpenClaw Secretos Expuestos - Contencion y Rotacion]]`.
+- Principio clave: secreto expuesto no se "borra", se rota y se revoca.
 
 ## [[Plan Git para este workspace]]
 
@@ -97,3 +106,63 @@
 - Estado Tailscale Serve: `sudo tailscale serve status`
 - Auditoria OpenClaw: `docker exec -it openclaw-hacw-openclaw-1 openclaw security audit`
 - Compose up: `sudo docker compose up -d`
+
+## [[OpenClaw + Telegram - Pairing desde VPS (Docker)]]
+
+- **Objetivo**: aprobar el acceso de Telegram correctamente cuando sale `pairing required` o `acceso no configurado`.
+- **Contexto de este VPS**:
+  - SSH: `ssh vps-openclaw`
+  - Contenedor real: `openclaw-hacw-openclaw-1`
+  - Bot Telegram: `@wclaw421_bot`
+
+### Pasos operativos
+
+- 1) Entrar al VPS por SSH (no usar consola web para este flujo).
+  - `ssh vps-openclaw`
+
+- 2) Confirmar nombre real del contenedor.
+  - `docker ps`
+  - Verificar que exista `openclaw-hacw-openclaw-1`.
+
+- 3) Listar solicitudes de pairing pendientes en Telegram.
+  - `docker exec -it openclaw-hacw-openclaw-1 openclaw pairing list --channel telegram`
+
+- 4) Aprobar el codigo pendiente.
+  - `docker exec -it openclaw-hacw-openclaw-1 openclaw pairing approve --channel telegram <CODIGO>`
+  - Exito esperado: `Approved telegram sender <id>`.
+
+- 5) Si sigue saliendo "acceso no configurado", forzar allowlist del ID autorizado.
+  - `docker exec -i openclaw-hacw-openclaw-1 python3 - <<'PY'`
+  - `import json`
+  - `p="/data/.openclaw/openclaw.json"`
+  - `d=json.load(open(p))`
+  - `tg=d.setdefault("channels",{}).setdefault("telegram",{})`
+  - `tg["dmPolicy"]="allowlist"`
+  - `ids=tg.get("allowFrom",[])`
+  - `if 5570879165 not in ids: ids.append(5570879165)`
+  - `tg["allowFrom"]=ids`
+  - `json.dump(d, open(p,"w"), indent=2)`
+  - `print("OK", tg["dmPolicy"], tg["allowFrom"])`
+  - `PY`
+
+- 6) Reiniciar OpenClaw y probar.
+  - `sudo docker compose -f /docker/openclaw-hacw/docker-compose.yml restart`
+  - En Telegram enviar `/start` a `@wclaw421_bot`.
+
+### Errores comunes y solucion
+
+- `command not found: openclaw`
+  - Causa: comando ejecutado fuera del contenedor.
+  - Solucion: usar `docker exec -it openclaw-hacw-openclaw-1 ...`.
+
+- `No such container`
+  - Causa: nombre de contenedor incorrecto.
+  - Solucion: consultar `docker ps` y usar el nombre exacto.
+
+- `Channel required`
+  - Causa: CLI exige canal explicito.
+  - Solucion: usar `--channel telegram`.
+
+- Pairing no aparece o no aprueba
+  - Causa: codigo expirado.
+  - Solucion: enviar mensaje nuevo al bot, listar de nuevo, aprobar en menos de 1 minuto.

@@ -1,6 +1,6 @@
 # Session State: Linux AI Hub
 
-**Last Updated**: 2026-02-23 19:35
+**Last Updated**: 2026-02-23 22:48
 
 ## Session Objective
 
@@ -13,6 +13,13 @@ Cerrar la sesion con memoria persistida para retomar en cualquier momento con el
 - [x] Incluidos aprendizajes y errores reales de la sesion.
 - [x] Definido flujo Git recomendado (local -> remoto -> push).
 - [x] Remoto conectado y `push` completado a GitHub.
+- [x] Diagnosticado problema "offline": causa real `pairing required`, no puerto/red.
+- [x] Pairing de Telegram aprobado con CLI dentro de contenedor.
+- [x] Creado runbook especifico en `pages/OpenClaw Telegram Pairing.md`.
+- [x] Creado resumen diario y avance en `journals/2026_02_24.md`.
+- [x] Creada guia de contencion para secretos expuestos en `pages/OpenClaw Secretos Expuestos - Contencion y Rotacion.md`.
+- [x] Token Telegram validado con `getMe` (`ok: true`) para bot activo `@w421claw_bot`.
+- [x] Ajustado runbook con aprendizaje de `up --force-recreate` cuando `.env` no parece aplicarse.
 
 ## Critical Technical Context
 
@@ -23,7 +30,7 @@ Cerrar la sesion con memoria persistida para retomar en cualquier momento con el
 
 ## Next Steps
 
-1. Mantener `logseq.md` como pagina maestra y agregar nuevas notas por bloques `[[Page Links]]`.
-2. Hacer commits pequenos por tema (ej: seguridad, tailscale, runbooks).
-3. Ejecutar `openclaw security audit --deep` cuando haya cambios de configuracion.
-4. En una sesion nueva, ejecutar el skill `continue` para restaurar contexto desde `logs/CURRENT_SESSION.md` y `logs/history/`.
+1. Confirmar y dejar fijo `gateway.controlUi.allowInsecureAuth=false` tras estabilizacion.
+2. Rotar secretos que quedaron expuestos en chat/consola y guardar solo nuevos valores en password manager.
+3. Mantener `logseq.md` como pagina maestra y agregar nuevas notas por bloques `[[Page Links]]`.
+4. Hacer commits pequenos por tema (ej: seguridad, tailscale, runbooks).

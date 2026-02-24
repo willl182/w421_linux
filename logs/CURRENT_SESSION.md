@@ -1,6 +1,6 @@
 # Session State: Linux AI Hub
 
-**Last Updated**: 2026-02-24 00:35
+**Last Updated**: 2026-02-24 04:45
 
 ## Session Objective
 
@@ -24,6 +24,9 @@ Cerrar la sesion con memoria persistida para retomar en cualquier momento con el
 - [x] Detectado override conflictivo de cloud-init (`50-cloud-init.conf`) y deshabilitado.
 - [x] Persistida politica cloud-init: `ssh_pwauth: false`.
 - [x] UFW ajustado para quitar `OpenSSH Anywhere` y dejar SSH por IP especifica.
+- [x] `fail2ban` instalado, habilitado y validado (`active`, `pong`, jail `sshd`).
+- [x] Ajustada jail SSH: `backend=systemd`, `maxretry=5`, `findtime=10m`, `bantime=1h`.
+- [x] Definido `ignoreip` para localhost, tailnet y IP operativa.
 
 ## Critical Technical Context
 
@@ -34,7 +37,7 @@ Cerrar la sesion con memoria persistida para retomar en cualquier momento con el
 
 ## Next Steps
 
-1. Activar `fail2ban` y validar jail activo para SSH.
-2. Confirmar y dejar fijo `gateway.controlUi.allowInsecureAuth=false` tras estabilizacion.
-3. Rotar secretos que quedaron expuestos en chat/consola y guardar solo nuevos valores en password manager.
-4. Mantener `logseq.md` como pagina maestra y agregar nuevas notas por bloques `[[Page Links]]`.
+1. Confirmar y dejar fijo `gateway.controlUi.allowInsecureAuth=false` tras estabilizacion.
+2. Rotar secretos que quedaron expuestos en chat/consola y guardar solo nuevos valores en password manager.
+3. Mantener `logseq.md` como pagina maestra y agregar nuevas notas por bloques `[[Page Links]]`.
+4. Revisar periodicamente `fail2ban-client status sshd` para detectar picos de ataque.

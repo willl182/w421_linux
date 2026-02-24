@@ -96,7 +96,8 @@
 - `passwordauthentication no`, `permitrootlogin no`, `pubkeyauthentication yes`, `kbdinteractiveauthentication no`.
 - UFW sin reglas globales `OpenSSH Anywhere`; acceso SSH permitido por IP especifica.
 - Persistencia cloud-init aplicada con `ssh_pwauth: false`.
-- Pendiente recomendado: activar `fail2ban`.
+- `fail2ban` activo y validado (`pong`, jail `sshd` operativa).
+- Ajuste aplicado en jail SSH: `backend=systemd`, `maxretry=5`, `findtime=10m`, `bantime=1h`, `ignoreip` con localhost + tailnet + IP operativa.
 
 ## [[Plan Git para este workspace]]
 

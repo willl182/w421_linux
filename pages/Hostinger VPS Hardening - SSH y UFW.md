@@ -48,8 +48,28 @@
 - `sudo ufw status numbered`
 - `sudo ufw status verbose`
 
-- ## Pendiente recomendado
-- Activar `fail2ban`:
-- `sudo apt update && sudo apt install -y fail2ban`
+- ## Accion aplicada (fail2ban ajustado)
+- Estado final verificado: servicio `active`, `pong`, jail `sshd` cargada.
+- Comandos ejecutados:
+- `sudo apt update`
+- `sudo apt install -y fail2ban`
 - `sudo systemctl enable --now fail2ban`
-- `sudo systemctl is-active fail2ban`
+- `sudo fail2ban-client -t` (OK)
+- `sudo systemctl restart fail2ban`
+- `sudo fail2ban-client status`
+- `sudo fail2ban-client status sshd`
+
+- Configuracion recomendada para este host (`/etc/fail2ban/jail.d/sshd.local`):
+- `[sshd]`
+- ` enabled = true`
+- ` backend = systemd`
+- ` maxretry = 5`
+- ` findtime = 10m`
+- ` bantime = 1h`
+- ` ignoreip = 127.0.0.1/8 ::1 100.64.0.0/10 190.60.38.51/32`
+
+- Verificacion de salud:
+- `sudo systemctl is-active fail2ban` -> `active`
+- `sudo fail2ban-client ping` -> `Server replied: pong`
+- `sudo fail2ban-client status` -> `Jail list: sshd`
+- `sudo fail2ban-client status sshd` -> filtro/jail operativos

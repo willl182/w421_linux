@@ -1,6 +1,6 @@
 # Session State: Linux AI Hub
 
-**Last Updated**: 2026-02-23 19:17
+**Last Updated**: 2026-02-23 19:34
 
 ## Session Objective
 
@@ -12,7 +12,7 @@ Documentar el plan final usado para dejar OpenClaw estable y seguro en VPS, y pr
 - [x] Incluidas paginas propuestas para Logseq mediante `[[Page Links]]`.
 - [x] Incluidos aprendizajes y errores reales de la sesion.
 - [x] Definido flujo Git recomendado (local -> remoto -> push).
-- [ ] Pendiente conectar remoto Git y hacer `push`.
+- [x] Remoto conectado y `push` completado a GitHub.
 
 ## Critical Technical Context
 
@@ -23,6 +23,6 @@ Documentar el plan final usado para dejar OpenClaw estable y seguro en VPS, y pr
 
 ## Next Steps
 
-1. Inicializar repo git local en `/home/w182/w421/linux`.
-2. Crear primer commit con `logseq.md` y archivos `logs/`.
-3. Agregar remoto y ejecutar `push` cuando se tenga URL.
+1. Mantener `logseq.md` como pagina maestra y agregar nuevas notas por bloques `[[Page Links]]`.
+2. Hacer commits pequenos por tema (ej: seguridad, tailscale, runbooks).
+3. Ejecutar `openclaw security audit --deep` cuando haya cambios de configuracion.

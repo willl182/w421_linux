@@ -1,2 +1,3 @@
 - [[OpenClaw Telegram Pairing (VPS + Docker)]]
 - [[OpenClaw Secretos Expuestos - Contencion y Rotacion]]
+- [[Hostinger VPS Hardening - SSH y UFW]]

@@ -1,6 +1,6 @@
 # Session State: Linux AI Hub
 
-**Last Updated**: 2026-02-23 22:48
+**Last Updated**: 2026-02-24 00:35
 
 ## Session Objective
 
@@ -20,6 +20,10 @@ Cerrar la sesion con memoria persistida para retomar en cualquier momento con el
 - [x] Creada guia de contencion para secretos expuestos en `pages/OpenClaw Secretos Expuestos - Contencion y Rotacion.md`.
 - [x] Token Telegram validado con `getMe` (`ok: true`) para bot activo `@w421claw_bot`.
 - [x] Ajustado runbook con aprendizaje de `up --force-recreate` cuando `.env` no parece aplicarse.
+- [x] Endurecido SSH en VPS: `passwordauthentication no`, `permitrootlogin no`, `pubkeyauthentication yes`.
+- [x] Detectado override conflictivo de cloud-init (`50-cloud-init.conf`) y deshabilitado.
+- [x] Persistida politica cloud-init: `ssh_pwauth: false`.
+- [x] UFW ajustado para quitar `OpenSSH Anywhere` y dejar SSH por IP especifica.
 
 ## Critical Technical Context
 
@@ -30,7 +34,7 @@ Cerrar la sesion con memoria persistida para retomar en cualquier momento con el
 
 ## Next Steps
 
-1. Confirmar y dejar fijo `gateway.controlUi.allowInsecureAuth=false` tras estabilizacion.
-2. Rotar secretos que quedaron expuestos en chat/consola y guardar solo nuevos valores en password manager.
-3. Mantener `logseq.md` como pagina maestra y agregar nuevas notas por bloques `[[Page Links]]`.
-4. Hacer commits pequenos por tema (ej: seguridad, tailscale, runbooks).
+1. Activar `fail2ban` y validar jail activo para SSH.
+2. Confirmar y dejar fijo `gateway.controlUi.allowInsecureAuth=false` tras estabilizacion.
+3. Rotar secretos que quedaron expuestos en chat/consola y guardar solo nuevos valores en password manager.
+4. Mantener `logseq.md` como pagina maestra y agregar nuevas notas por bloques `[[Page Links]]`.

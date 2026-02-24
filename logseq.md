@@ -82,11 +82,21 @@
   - **Aprendizaje**: cuando hay dudas de variables, recrear con `docker compose ... up -d --force-recreate`.
 - **Error**: diagnosticar Telegram sin validar API directa.
   - **Aprendizaje**: confirmar token con `curl https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/getMe` (`ok: true`).
+- **Error**: asumir que un override tardio en `sshd_config.d` siempre aplica.
+  - **Aprendizaje**: en este host prevalecio `50-cloud-init.conf` con `PasswordAuthentication yes`; validar siempre con `sshd -T`.
 
 ## [[Seguridad - Respuesta a secretos expuestos]]
 
 - Runbook dedicado: `[[OpenClaw Secretos Expuestos - Contencion y Rotacion]]`.
 - Principio clave: secreto expuesto no se "borra", se rota y se revoca.
+
+## [[Hostinger VPS Hardening - SSH y UFW]]
+
+- Estado actual: SSH endurecido y verificado en runtime.
+- `passwordauthentication no`, `permitrootlogin no`, `pubkeyauthentication yes`, `kbdinteractiveauthentication no`.
+- UFW sin reglas globales `OpenSSH Anywhere`; acceso SSH permitido por IP especifica.
+- Persistencia cloud-init aplicada con `ssh_pwauth: false`.
+- Pendiente recomendado: activar `fail2ban`.
 
 ## [[Plan Git para este workspace]]
 

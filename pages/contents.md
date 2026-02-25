@@ -2,3 +2,4 @@
 - [[OpenClaw Secretos Expuestos - Contencion y Rotacion]]
 - [[Hostinger VPS Hardening - SSH y UFW]]
 - [[OpenClaw Docker - Plan Codex + ZAI]]
+- [[OpenClaw Docker - Solo ZAI GLM 4.7]]

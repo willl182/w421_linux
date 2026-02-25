@@ -56,3 +56,31 @@ docker restart openclaw-hacw-openclaw-1
 - Alias `glm` creado.
 - `agents.list[0].model` en `zai/glm-4.7`.
 - `models list` sin errores.
+
+## Verificacion desde CLI en VPS
+
+Si en interfaz ya funciona, estas son validaciones equivalentes por terminal:
+
+```bash
+CNAME="openclaw-hacw-openclaw-1"
+
+docker exec -i "$CNAME" openclaw config get agents.defaults.model
+docker exec -i "$CNAME" openclaw config get agents.defaults.models
+docker exec -i "$CNAME" openclaw config get agents.list[0].model
+docker exec -i "$CNAME" openclaw models list
+```
+
+Prueba interactiva desde CLI:
+
+```bash
+docker exec -it "$CNAME" openclaw
+```
+
+Dentro de OpenClaw:
+
+```text
+/model list
+/model glm
+```
+
+Nota: el comando correcto es `models list` (plural), no `model list`.

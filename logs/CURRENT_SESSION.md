@@ -16,6 +16,7 @@ Dejar OpenClaw en modo solo Z.AI GLM 4.7 y documentar el runbook sin exponer sec
 - [x] Se identifico que `openclaw model list` es incorrecto; comando correcto: `openclaw models list`.
 - [x] Se identifico causa de validaciones fallidas en UI: contenido pegado como objeto JS sin comillas validas de JSON/JSON5.
 - [x] Se documento workaround robusto: usar `openclaw config set` en vez de editar JSON manualmente en UI.
+- [x] Validado desde la interfaz de OpenClaw que `glm` funciona correctamente en sesion real.
 - [ ] Pendiente cargar API key real de Z.AI (omitida deliberadamente en esta sesion).
 
 ## Critical Technical Context
@@ -27,6 +28,6 @@ Dejar OpenClaw en modo solo Z.AI GLM 4.7 y documentar el runbook sin exponer sec
 
 ## Next Steps
 
-1. Cargar `env.ZAI_API_KEY` real por CLI en contenedor.
-2. Reiniciar contenedor `openclaw-hacw-openclaw-1`.
-3. Verificar con `openclaw models list` y cambio de alias `/model glm`.
+1. Validar por CLI en VPS que `primary`/`alias` siguen en `zai/glm-4.7` tras reinicio.
+2. Ejecutar una prueba rapida desde CLI (`openclaw` -> `/model glm`) y confirmar respuesta.
+3. Mantener cambios de configuracion por `openclaw config set` para evitar errores de parser en UI.
